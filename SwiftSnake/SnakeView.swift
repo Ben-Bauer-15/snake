@@ -12,7 +12,8 @@ class SnakeView : UIView {
 		super.init(coder: aDecoder)
 		self.backgroundColor = UIColor.white
 	}
-
+    
+    //this initializer is called in ViewController to set self.snakeframe
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		self.backgroundColor = UIColor.white
@@ -20,7 +21,6 @@ class SnakeView : UIView {
 
 	override func draw(_ rect: CGRect) {
 		super.draw(rect)
-
         UIColor.lightGray.set()
         UIBezierPath(rect: rect).fill()
 
@@ -28,12 +28,12 @@ class SnakeView : UIView {
 			let worldSize = snake.worldSize
             let tileSize = self.bounds.size.height
 
-			if worldSize <= 0 {
+			if worldSize.x <= 0 {
 				return
 			}
 
-			let w = Int(Float(tileSize) / Float(worldSize))
-			let h = Int(Float(tileSize) / Float(worldSize))
+			let w = Int(Float(tileSize) / Float(worldSize.x))
+			let h = Int(Float(tileSize) / Float(worldSize.y))
 
 			UIColor.black.set()
 			let points = snake.points

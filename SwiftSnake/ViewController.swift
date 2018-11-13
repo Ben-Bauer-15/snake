@@ -1,5 +1,8 @@
 import UIKit
 
+
+
+
 class ViewController: UIViewController, SnakeViewDelegate {
 	@IBOutlet var startButton:UIButton?
 	var snakeView:SnakeView?
@@ -17,14 +20,17 @@ class ViewController: UIViewController, SnakeViewDelegate {
         let width = self.view.frame.size.width
         let snakeX = Int((width - height) / 2)
 
-        let snakeFrame = CGRect(x: Int(snakeX), y: Int(0), width: Int(height), height: Int(height))
-
+        //this is simply a rectangle with the origin at the bottom left corner (which is X, Y)
+        let snakeFrame = CGRect(x: Int(0), y: Int(0) , width: Int(width), height: Int(width))
+        
+        //instantiates SnakeView with the rectangle that we just defined above
         self.snakeView = SnakeView(frame: snakeFrame)
 		self.view.insertSubview(self.snakeView!, at: 0)
 
 		if let view = self.snakeView {
 			view.delegate = self
 		}
+        
 		for direction in [UISwipeGestureRecognizerDirection.right,
 			UISwipeGestureRecognizerDirection.left,
 			UISwipeGestureRecognizerDirection.up,
@@ -68,8 +74,8 @@ class ViewController: UIViewController, SnakeViewDelegate {
 		let worldSize = self.snake!.worldSize
 		var x = 0, y = 0
 		while (true) {
-            x = Int(arc4random_uniform(UInt32(worldSize)))
-            y = Int(arc4random_uniform(UInt32(worldSize)))
+            x = Int(arc4random_uniform(UInt32(worldSize.x)))
+            y = Int(arc4random_uniform(UInt32(worldSize.y)))
 			var isBody = false
 			for p in self.snake!.points {
 				if p.x == x && p.y == y {
@@ -90,8 +96,11 @@ class ViewController: UIViewController, SnakeViewDelegate {
 		}
 
 		self.startButton!.isHidden = true
-        let height = self.view.frame.size.height
-		let worldSize = Int(height.truncatingRemainder(dividingBy: 100))
+        
+        let width = self.view.frame.size.width
+        
+        //world size is the height of the frame that the snake "has access to"
+        let worldSize = WorldSize(x : Int(width.truncatingRemainder(dividingBy: 100)), y : Int(width.truncatingRemainder(dividingBy: 100)) )
 		self.snake = Snake(inSize: worldSize, length: 2)
 		self.makeNewFruit()
 		self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.timerMethod(_:)), userInfo: nil, repeats: true)

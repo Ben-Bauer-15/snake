@@ -165,7 +165,7 @@
 				TargetAttributes = {
 					D4F3B13F193F777800D11DE2 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = 3T2XJ65WTS;
+						DevelopmentTeam = 6L3N5HVD5M;
 						LastSwiftMigration = 0830;
 					};
 					D4F3B151193F777800D11DE2 = {
@@ -346,9 +346,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 3T2XJ65WTS;
+				DEVELOPMENT_TEAM = 6L3N5HVD5M;
 				INFOPLIST_FILE = SwiftSnake/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.zonble.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -362,9 +362,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 3T2XJ65WTS;
+				DEVELOPMENT_TEAM = 6L3N5HVD5M;
 				INFOPLIST_FILE = SwiftSnake/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.zonble.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
