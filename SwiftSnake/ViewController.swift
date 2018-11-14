@@ -1,24 +1,36 @@
 import UIKit
-
-
+import CoreData
 
 
 class ViewController: UIViewController, SnakeViewDelegate {
 	@IBOutlet var startButton:UIButton?
 	var snakeView:SnakeView?
 	var timer:Timer?
-
+    var users = [User]()
+    var currentUser = User()
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    
+    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var saveContext = (UIApplication.shared.delegate as! AppDelegate).saveContext
+    
+    
+    @IBAction func quitButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    var score = 0
+    @IBOutlet weak var scoreLabel: UILabel!
+    
+    
 	var snake:Snake?
 	var fruit:Point?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
+        scoreLabel.text = "Your score: 0"
+        
         self.view.backgroundColor = UIColor.gray
 
-        let height = self.view.frame.size.height
         let width = self.view.frame.size.width
-        let snakeX = Int((width - height) / 2)
 
         //this is simply a rectangle with the origin at the bottom left corner (which is X, Y)
         let snakeFrame = CGRect(x: Int(0), y: Int(0) , width: Int(width), height: Int(width))
@@ -105,9 +117,38 @@ class ViewController: UIViewController, SnakeViewDelegate {
 		self.makeNewFruit()
 		self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.timerMethod(_:)), userInfo: nil, repeats: true)
 		self.snakeView!.setNeedsDisplay()
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName : "Score")
+        do {
+            let result = try context.fetch(request)
+            print(result)
+        }
+        catch {
+            print("\(error)")
+        }
+        
 	}
 
 	func endGame() {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName : "User")
+        do {
+            let result = try context.fetch(request)
+            users = result as! [User]
+            currentUser = users[0]
+        }
+        catch {
+            print("\(error)")
+        }
+
+        let game = NSEntityDescription.insertNewObject(forEntityName : "Score", into : context) as! Score
+        game.score = Int64(score)
+        game.user = currentUser
+        saveContext()
+        
+        ScoreModel.addScore(name: delegate.name!, score: score) {
+            data, response, error in
+        }
+        
 		self.startButton!.isHidden = false
 		self.timer!.invalidate()
 		self.timer = nil
@@ -117,6 +158,7 @@ class ViewController: UIViewController, SnakeViewDelegate {
 		self.snake?.move()
 		let headHitBody = self.snake?.isHeadHitBody()
 		if headHitBody == true {
+
 			self.endGame()
 			return
 		}
@@ -124,6 +166,8 @@ class ViewController: UIViewController, SnakeViewDelegate {
 		let head = self.snake?.points[0]
 		if head?.x == self.fruit?.x &&
 			head?.y == self.fruit?.y {
+                self.score += 1
+                scoreLabel.text = "Your score: " + String(self.score)
 				self.snake!.increaseLength(2)
 				self.makeNewFruit()
 		}
