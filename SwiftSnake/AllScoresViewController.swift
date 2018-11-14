@@ -52,7 +52,7 @@ class AllScoresViewController: UIViewController, UITableViewDataSource, UITableV
             cell.textLabel?.text = String(localScores[indexPath.row].score)
         case globalScoresTable:
             cell = tableView.dequeueReusableCell(withIdentifier: "globalScoreCell", for: indexPath)
-            cell.textLabel?.text = String(String(globalScores[indexPath.row]["userName"] as! String) +  String(globalScores[indexPath.row]["score"] as! Int))
+            cell.textLabel?.text = String(String(globalScores[indexPath.row]["userName"] as! String) + " " + String(globalScores[indexPath.row]["score"] as! Int))
         default:
             print("Something fucked up")
         }

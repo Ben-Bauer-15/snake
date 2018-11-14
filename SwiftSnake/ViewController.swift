@@ -130,6 +130,7 @@ class ViewController: UIViewController, SnakeViewDelegate {
 	}
 
 	func endGame() {
+        
         let request = NSFetchRequest<NSFetchRequestResult>(entityName : "User")
         do {
             let result = try context.fetch(request)
@@ -152,6 +153,7 @@ class ViewController: UIViewController, SnakeViewDelegate {
 		self.startButton!.isHidden = false
 		self.timer!.invalidate()
 		self.timer = nil
+        score = 0
 	}
 
 	func timerMethod(_ timer:Timer) {
